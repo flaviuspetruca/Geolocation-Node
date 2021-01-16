@@ -12,12 +12,15 @@
       latitude: <span id="latitude"></span>&deg;<br />
       longitude: <span id="longitude"></span>&deg;
     </p>
-    <button id="submit">submit</button>
+    <input type="text" id="inputText">
+    <button id="submit">submit</button><br />
+    <a href="all.html">Next page</a>
     <script>
       let lat, lon;
       const button = document.getElementById('submit');
       button.addEventListener('click', async event => {
-        const data = { lat, lon };
+        const text = document.getElementById('inputText').value;
+        const data = { lat, lon, text};
         const options = {
           method: 'POST',
           headers: {
@@ -42,5 +45,21 @@
         console.log('geolocation not available');
       }
     </script>
+    <script>
+      const text = document.getElementById('inputText').value;
+      const options = {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(text)
+      };
+      async function getData(){
+          const resp = await fetch('/trial', options);
+          const data = await resp.json();
+          console.log(data);
+      }   
+      getData();
+  </script>
   </body>
 </html>
